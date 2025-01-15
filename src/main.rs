@@ -1,7 +1,18 @@
-use ScyllaChess::bitboard::Bitboard;
+use scylla_chess::bitboard::Bitboard;
 
 fn main() {
-    let _b = Bitboard::new();
+    let mut b = Bitboard::new();
 
-    println!("{}", _b.board);
+    b.set(2, 4); // Square C5
+
+    println!("{}", b);
+
+    // let mut ans: u64 = 1 << 32;
+    // let mask = 1 << 5;
+
+    // ans |= mask;
+
+    // let occ = (ans >> 5) & 1;
+
+    // println!("Number: {:b}\t Mask: {:b}\nOccupancy: {}", ans, mask, occ);
 }
