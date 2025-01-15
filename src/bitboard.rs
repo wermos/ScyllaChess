@@ -15,8 +15,8 @@ impl Bitboard {
     }
 }
 
-impl fmt::Display for Bitboard {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+// impl fmt::Display for Bitboard {
+//     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         
-    }
-}
+//     }
+// }

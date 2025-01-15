@@ -1,4 +1,4 @@
-use crate::bitboard::Bitboard;
+use ScyllaChess::bitboard::Bitboard;
 
 fn main() {
     let _b = Bitboard::new();
