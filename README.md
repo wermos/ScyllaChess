@@ -12,7 +12,7 @@ and then
 cmake --build build
 ```
 
-The executable will be inside the `build` directory and can be run 
+The executable will be inside the `build` directory and can be run via
 
 ```bash
 ./build/scylla
