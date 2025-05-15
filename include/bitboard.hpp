@@ -16,6 +16,9 @@ namespace scy {
 
 class Bitboard {
    public:
+    // constructor with a default value of 0
+    constexpr Bitboard(std::uint64_t b = 0) : board(b) {}
+
     friend constexpr bool operator==(const Bitboard& b1, const Bitboard& b2) {
         return b1 == b2;
     }
@@ -63,8 +66,8 @@ class Bitboard {
     // Bitwise NOT
     friend constexpr Bitboard operator~(const Bitboard& b) { return ~b; }
 
-    // Prints the bitboard in a 8x8 grid format ; 1 = piece, 0 = empty square
     friend std::ostream& operator<<(std::ostream& os, const Bitboard& b) {
+        // 1 = piece, 0 = empty square
 
         for (int rank = 7; rank >= 0; rank--) {
             for (int file = 0; file <= 7; file++) {
@@ -75,13 +78,10 @@ class Bitboard {
                     os << "0 ";
                 }
             }
-            os << "\n";
+            os << '\n';
         }
         return os;
     }
-
-    // constructor with a default value of 0
-    constexpr Bitboard(std::uint64_t b = 0) : board(b) {}
 
    private:
     std::uint64_t board;
