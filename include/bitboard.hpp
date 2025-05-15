@@ -20,6 +20,10 @@ class Bitboard {
         return b1 == b2;
     }
 
+    friend constexpr bool operator!=(const Bitboard& b1, const Bitboard& b2) {
+        return !(b1 == b2);
+    }
+
     // Bitwise AND
     friend constexpr Bitboard operator&(const Bitboard& b1,
                                         const Bitboard& b2) {
