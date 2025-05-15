@@ -1,6 +1,7 @@
 #include <cstdint>
 #include <iostream>
 
+#include "bitboard.hpp"
 #include "square.hpp"
 
 using namespace scy;
@@ -14,4 +15,13 @@ int main() {
     // Literal syntax
     auto a1 = "a1"_sq;
     uint64_t board = 1ULL << static_cast<int>(a1);
+
+    Bitboard myboard;
+    std::cout << myboard << std::endl;
+
+    auto d7 = "d7"_sq;
+    uint64_t board2 = 1ULL << static_cast<int>(d7);
+    Bitboard myboard2(board | board2);
+
+    std::cout << myboard2 << std::endl;
 }
