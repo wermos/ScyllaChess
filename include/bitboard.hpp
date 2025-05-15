@@ -69,7 +69,11 @@ class Bitboard {
     friend std::ostream& operator<<(std::ostream& os, const Bitboard& b) {
         // 1 = piece, 0 = empty square
 
+        os << "    a b c d e f g h\n";
+        os << "  +-----------------+\n";
+
         for (int rank = 7; rank >= 0; rank--) {
+            os << rank + 1 << " | ";
             for (int file = 0; file <= 7; file++) {
                 // rank * 8 + file gives the index of the square
                 if (b.board & (1ULL << (rank * 8 + file))) {
@@ -78,8 +82,12 @@ class Bitboard {
                     os << "0 ";
                 }
             }
+            os << "| " << rank + 1;
+
             os << '\n';
         }
+        os << "  +-----------------+\n";
+        os << "    a b c d e f g h\n";
         return os;
     }
 
