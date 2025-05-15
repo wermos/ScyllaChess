@@ -1,10 +1,11 @@
 #pragma once
 
-#include <cstdint> // for the std::uint64_t type
+#include <cstdint>  // for the std::uint64_t type
 #include <ostream>
 #include <string>
 
 #include "square.hpp"
+
 namespace scy {
 
 /// store the chess piece unicode characters so that we can use them when
@@ -15,7 +16,25 @@ namespace scy {
 
 class Bitboard {
    public:
-    friend std::ostream& operator<<(std::ostream& os, char8_t const& ch) {
+    friend constexpr bool operator==(const Bitboard& b1, const Bitboard& b2) {
+        return b1 == b2;
+    }
+
+    friend constexpr Bitboard operator&(const Bitboard& b1,
+                                        const Bitboard& b2) {
+        return b1 & b2;
+    }
+
+    friend constexpr Bitboard operator|(const Bitboard& b1,
+                                        const Bitboard& b2) {
+        return b1 | b2;
+    }
+
+    // should overload &=, |=, and xor and xor_eq
+    // bitwise not aka operator~ also.
+
+    friend std::ostream& operator<<(std::ostream& os, const Bitboard& b) {
+        // TODO: Fill in the function definition
 
         return os;
     }
@@ -25,4 +44,5 @@ class Bitboard {
 };
 
 class ChessBoard {};
+
 }  // namespace scy
