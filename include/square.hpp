@@ -2,8 +2,8 @@
 
 #include <cctype>  // std::tolower
 // TODO: see if this is needed and if tolower exists anywhere else.
-#include <cstddef>  // for the std::size_t type
-#include <stdexcept> // required for std::invalid_argument
+#include <cstddef>    // for the std::size_t type
+#include <stdexcept>  // required for std::invalid_argument
 #include <string>
 
 namespace scy {
