@@ -20,18 +20,44 @@ class Bitboard {
         return b1 == b2;
     }
 
+    // Bitwise AND
     friend constexpr Bitboard operator&(const Bitboard& b1,
                                         const Bitboard& b2) {
         return b1 & b2;
     }
 
+    friend constexpr Bitboard& operator&=(Bitboard& self,
+                                          const Bitboard& other) {
+        self &= other;
+        return self;
+    }
+
+    // Bitwise OR
     friend constexpr Bitboard operator|(const Bitboard& b1,
                                         const Bitboard& b2) {
         return b1 | b2;
     }
 
-    // should overload &=, |=, and xor and xor_eq
-    // bitwise not aka operator~ also.
+    friend constexpr Bitboard& operator|=(Bitboard& self,
+                                          const Bitboard& other) {
+        self |= other;
+        return self;
+    }
+
+    // Bitwise XOR
+    friend constexpr Bitboard operator^(const Bitboard& b1,
+                                        const Bitboard& b2) {
+        return b1 & b2;
+    }
+
+    friend constexpr Bitboard& operator^=(Bitboard& self,
+                                          const Bitboard& other) {
+        self ^= other;
+        return self;
+    }
+
+    // Bitwise NOT
+    friend constexpr Bitboard operator~(const Bitboard& b) { return ~b; }
 
     friend std::ostream& operator<<(std::ostream& os, const Bitboard& b) {
         // TODO: Fill in the function definition
