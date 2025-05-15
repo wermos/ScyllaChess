@@ -73,6 +73,29 @@ class Bitboard {
     std::uint64_t board;
 };
 
-class ChessBoard {};
+// TODO: implement like this or use an std::array?
+class ChessBoard {
+   private:
+    // white pieces
+    Bitboard m_whiteKing;
+    Bitboard m_whiteQueens;
+    Bitboard m_whiteRooks;
+    Bitboard m_whiteBishops;
+    Bitboard m_whiteKnights;
+    Bitboard m_whitePawns;
+
+    // black pieces
+    Bitboard m_blackKing;
+    Bitboard m_blackQueens;
+    Bitboard m_blackRooks;
+    Bitboard m_blackBishops;
+    Bitboard m_blackKnights;
+    Bitboard m_blackPawns;
+
+    // all pieces
+    Bitboard m_allWhitePieces;
+    Bitboard m_allBlackPieces;
+    Bitboard m_allPieces;
+};
 
 }  // namespace scy
