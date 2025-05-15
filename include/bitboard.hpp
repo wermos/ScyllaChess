@@ -16,8 +16,8 @@ namespace scy {
 
 class Bitboard {
    public:
-    // constructor with a default value of 0
-    constexpr Bitboard(std::uint64_t b = 0) : board(b) {}
+    void set(Square sq) { board |= (1ULL << static_cast<int>(sq)); }
+    void unset(Square sq) { board &= ~(1ULL << static_cast<int>(sq)); }
 
     friend constexpr bool operator==(const Bitboard& b1, const Bitboard& b2) {
         return b1 == b2;
@@ -84,7 +84,7 @@ class Bitboard {
     }
 
    private:
-    std::uint64_t board;
+    std::uint64_t board{0};
 };
 
 // TODO: implement like this or use an std::array?
