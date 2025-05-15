@@ -1,6 +1,7 @@
 #include <iostream>
+#include <cstdint>
 
-#include "bitboard.hpp"
+#include "square.hpp"
 
 using namespace scy;
 
