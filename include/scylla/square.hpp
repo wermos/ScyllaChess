@@ -35,7 +35,9 @@ class Square {
         : index(idx < 64 ? idx : throw std::invalid_argument("Invalid index")) {
     }
 
-    constexpr operator std::size_t() const noexcept { return index; }
+    constexpr operator std::size_t() const noexcept {
+        return index;
+    }
 
     constexpr operator std::string() const {
         return {static_cast<char>('a' + (index % 8)),
