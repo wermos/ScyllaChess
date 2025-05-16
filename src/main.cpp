@@ -1,8 +1,8 @@
 #include <cstdint>
 #include <iostream>
 
-#include "bitboard.hpp"
-#include "square.hpp"
+#include "scylla/bitboard.hpp"
+#include "scylla/square.hpp"
 
 using namespace scy;
 
