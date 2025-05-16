@@ -1,3 +1,6 @@
+![Build Status](https://github.com/wermos/ScyllaChess/actions/workflows/build.yml/badge.svg) ![License](https://img.shields.io/github/license/wermos/ScyllaChess)
+
+
 # ScyllaChess
 
 To build the repo, run
