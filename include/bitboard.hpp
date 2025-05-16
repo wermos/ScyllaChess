@@ -16,6 +16,9 @@ namespace scy {
 
 class Bitboard {
    public:
+    void set(Square sq) { board |= (1ULL << static_cast<int>(sq)); }
+    void unset(Square sq) { board &= ~(1ULL << static_cast<int>(sq)); }
+
     friend constexpr bool operator==(const Bitboard& b1, const Bitboard& b2) {
         return b1 == b2;
     }
@@ -64,13 +67,32 @@ class Bitboard {
     friend constexpr Bitboard operator~(const Bitboard& b) { return ~b; }
 
     friend std::ostream& operator<<(std::ostream& os, const Bitboard& b) {
-        // TODO: Fill in the function definition
+        // 1 = piece, 0 = empty square
 
+        os << "    a b c d e f g h\n";
+        os << "  +-----------------+\n";
+
+        for (int rank = 7; rank >= 0; rank--) {
+            os << rank + 1 << " | ";
+            for (int file = 0; file <= 7; file++) {
+                // rank * 8 + file gives the index of the square
+                if (b.board & (1ULL << (rank * 8 + file))) {
+                    os << "1 ";
+                } else {
+                    os << "0 ";
+                }
+            }
+            os << "| " << rank + 1;
+
+            os << '\n';
+        }
+        os << "  +-----------------+\n";
+        os << "    a b c d e f g h\n";
         return os;
     }
 
    private:
-    std::uint64_t board;
+    std::uint64_t board{0};
 };
 
 // TODO: implement like this or use an std::array?
