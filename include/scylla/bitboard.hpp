@@ -4,7 +4,7 @@
 #include <ostream>
 #include <string>
 
-#include "square.hpp"
+#include "scylla/square.hpp"
 
 namespace scy {
 
@@ -16,8 +16,17 @@ namespace scy {
 
 class Bitboard {
    public:
-    void set(Square sq) { board |= (1ULL << static_cast<int>(sq)); }
-    void unset(Square sq) { board &= ~(1ULL << static_cast<int>(sq)); }
+    constexpr Bitboard() noexcept = default;
+    // TODO: should the below constructor be marked as `explicit`?
+    constexpr Bitboard(std::uint64_t num) noexcept : board{num} {}
+
+    constexpr void set(Square sq) noexcept {
+        board |= 1 << static_cast<std::size_t>(sq);
+    }
+
+    constexpr void unset(Square sq) noexcept {
+        board &= ~(1 << static_cast<std::size_t>(sq));
+    }
 
     friend constexpr bool operator==(const Bitboard& b1, const Bitboard& b2) {
         return b1 == b2;
@@ -64,7 +73,9 @@ class Bitboard {
     }
 
     // Bitwise NOT
-    friend constexpr Bitboard operator~(const Bitboard& b) { return ~b; }
+    friend constexpr Bitboard operator~(const Bitboard& b) {
+        return ~b;
+    }
 
     friend std::ostream& operator<<(std::ostream& os, const Bitboard& b) {
         // 1 = piece, 0 = empty square
