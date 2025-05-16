@@ -17,8 +17,7 @@ namespace scy {
 class Bitboard {
    public:
     constexpr Bitboard() noexcept = default;
-    // TODO: should the below constructor be marked as `explicit`?
-    constexpr Bitboard(std::uint64_t num) noexcept : board{num} {}
+    constexpr explicit Bitboard(std::uint64_t num) noexcept : board{num} {}
 
     constexpr void set(Square sq) noexcept {
         board |= 1 << static_cast<std::size_t>(sq);
