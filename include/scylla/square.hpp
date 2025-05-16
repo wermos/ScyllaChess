@@ -48,9 +48,9 @@ class Square {
     std::size_t index;
 };
 
-// User-defined literal operator
-constexpr Square operator""_sq(const char* str, std::size_t) {
-    return Square(std::string{str});
-}
-
 }  // namespace scy
+
+// User-defined literal operator
+constexpr scy::Square operator""_sq(const char* str, std::size_t) {
+    return scy::Square(std::string{str});
+}
