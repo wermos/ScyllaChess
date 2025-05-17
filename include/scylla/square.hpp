@@ -52,5 +52,9 @@ class Square {
 
 // User-defined literal operator
 constexpr scy::Square operator""_sq(const char* str, std::size_t) {
+    // this operator overload needs to be in the global namespace
+    // because otherwise, it never gets included into the list of
+    // user-defined literal operator overloads that the compiler
+    // looks at.
     return scy::Square(std::string{str});
 }
