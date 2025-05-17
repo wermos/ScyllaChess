@@ -7,10 +7,10 @@
 
 TEST_CASE("Square basic conversions", "[square]") {
     scy::Square s1 = "e4";
-    REQUIRE(static_cast<std::size_t>(s1) == 36);
+    REQUIRE(static_cast<std::size_t>(s1) == 28);
     REQUIRE(static_cast<std::string>(s1) == "e4");
 
-    scy::Square s2 = 28;
+    scy::Square s2 = 35;
     REQUIRE(static_cast<std::string>(s2) == "d5");
 
     scy::Square s3 = "a1"_sq;
