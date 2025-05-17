@@ -28,7 +28,7 @@ class Bitboard {
     }
 
     friend constexpr bool operator==(const Bitboard& b1, const Bitboard& b2) {
-        return b1 == b2;
+        return b1.board == b2.board;
     }
 
     friend constexpr bool operator!=(const Bitboard& b1, const Bitboard& b2) {
@@ -38,42 +38,42 @@ class Bitboard {
     // Bitwise AND
     friend constexpr Bitboard operator&(const Bitboard& b1,
                                         const Bitboard& b2) {
-        return b1 & b2;
+        return Bitboard{b1.board & b2.board};
     }
 
     friend constexpr Bitboard& operator&=(Bitboard& self,
                                           const Bitboard& other) {
-        self &= other;
+        self.board &= other.board;
         return self;
     }
 
     // Bitwise OR
     friend constexpr Bitboard operator|(const Bitboard& b1,
                                         const Bitboard& b2) {
-        return b1 | b2;
+        return Bitboard{b1.board | b2.board};
     }
 
     friend constexpr Bitboard& operator|=(Bitboard& self,
                                           const Bitboard& other) {
-        self |= other;
+        self.board |= other.board;
         return self;
     }
 
     // Bitwise XOR
     friend constexpr Bitboard operator^(const Bitboard& b1,
                                         const Bitboard& b2) {
-        return b1 & b2;
+        return Bitboard{b1.board & b2.board};
     }
 
     friend constexpr Bitboard& operator^=(Bitboard& self,
                                           const Bitboard& other) {
-        self ^= other;
+        self.board ^= other.board;
         return self;
     }
 
     // Bitwise NOT
     friend constexpr Bitboard operator~(const Bitboard& b) {
-        return ~b;
+        return Bitboard{~b.board};
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Bitboard& b) {
