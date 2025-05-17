@@ -20,11 +20,11 @@ class Bitboard {
     constexpr explicit Bitboard(std::uint64_t num) noexcept : board{num} {}
 
     constexpr void set(Square sq) noexcept {
-        board |= 1 << static_cast<std::size_t>(sq);
+        board |= 1uz << static_cast<std::size_t>(sq);
     }
 
     constexpr void unset(Square sq) noexcept {
-        board &= ~(1 << static_cast<std::size_t>(sq));
+        board &= ~(1uz << static_cast<std::size_t>(sq));
     }
 
     friend constexpr bool operator==(const Bitboard& b1, const Bitboard& b2) {
@@ -86,7 +86,7 @@ class Bitboard {
             os << rank + 1 << " | ";
             for (int file = 0; file <= 7; file++) {
                 // rank * 8 + file gives the index of the square
-                if (b.board & (1ULL << (rank * 8 + file))) {
+                if (b.board & (1uz << (rank * 8 + file))) {
                     os << "1 ";
                 } else {
                     os << "0 ";
