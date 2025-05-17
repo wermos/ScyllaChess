@@ -1,12 +1,18 @@
 #pragma once
 
-#include <cctype>  // std::tolower
-// TODO: see if this is needed and if tolower exists anywhere else.
 #include <cstddef>    // for the std::size_t type
 #include <stdexcept>  // required for std::invalid_argument
 #include <string>
 
 namespace scy {
+
+namespace util {
+constexpr char tolower(char c) {
+    // `std::tolower` (in the `cctype` header) isn't `constexpr`, so we
+    // roll our own `constexpr`-friendly version.
+    return (c >= 'A' && c <= 'Z') ? c + ('a' - 'A') : c;
+}
+}  // namespace util
 
 // TODO: Figure out if using stdexcept errors is the best way to handle it.
 class Square {
@@ -15,8 +21,9 @@ class Square {
             throw std::invalid_argument("Invalid notation");
         }
 
-        char file = std::tolower(notation[0]);
+        char file = util::tolower(notation[0]);
         char rank = notation[1];
+
         if (file < 'a' || file > 'h' || rank < '1' || rank > '8') {
             throw std::invalid_argument("Invalid square");
         }
