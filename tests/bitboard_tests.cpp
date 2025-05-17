@@ -30,17 +30,17 @@ TEST_CASE("Bitboard bitwise operations", "[bitboard]") {
 
     Bitboard c = a & b;
     REQUIRE(c != Bitboard{});
-    REQUIRE(c == Bitboard{1ULL << 36});
+    REQUIRE(c == Bitboard{1uz << 28}); // e4 only
 
     Bitboard d = a | b;
     REQUIRE(d != a);
-    REQUIRE(d != b);
+    REQUIRE(d == b);
 
     Bitboard e = d;
     e ^= a;
     REQUIRE(e != a);
     REQUIRE(e != b);
-    REQUIRE(e == Bitboard{1 << 28});  // d5 only
+    REQUIRE(e == Bitboard{1uz << 35});  // d5 only
 }
 
 TEST_CASE("Bitboard NOT operator", "[bitboard]") {
@@ -49,5 +49,5 @@ TEST_CASE("Bitboard NOT operator", "[bitboard]") {
     Bitboard flipped = ~b;
 
     REQUIRE((flipped != b));
-    REQUIRE((flipped & Bitboard(1ULL << 0)) == Bitboard{});
+    REQUIRE((flipped & Bitboard{1uz << 0}) == Bitboard{});
 }
