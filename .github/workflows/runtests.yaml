@@ -1,0 +1,32 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: 'true'
+
+    - name: Set up CMake
+      uses: jwlawson/actions-setup-cmake@v1
+
+    - name: Configure CMake
+      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTING=ON
+
+    - name: Build
+      run: cmake --build build --parallel 4
+
+    - name: Run the tests
+      run: ./build/tests/tests
