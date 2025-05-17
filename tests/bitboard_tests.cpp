@@ -30,7 +30,7 @@ TEST_CASE("Bitboard bitwise operations", "[bitboard]") {
 
     Bitboard c = a & b;
     REQUIRE(c != Bitboard{});
-    REQUIRE(c == Bitboard{1uz << 28}); // e4 only
+    REQUIRE(c == Bitboard{1uz << 28});  // e4 only
 
     Bitboard d = a | b;
     REQUIRE(d != a);
