@@ -27,52 +27,52 @@ class Bitboard {
         board &= ~(1uz << static_cast<std::size_t>(sq));
     }
 
-    friend constexpr bool operator==(const Bitboard& b1, const Bitboard& b2) {
+    friend constexpr bool operator==(const Bitboard& b1, const Bitboard& b2) noexcept {
         return b1.board == b2.board;
     }
 
-    friend constexpr bool operator!=(const Bitboard& b1, const Bitboard& b2) {
+    friend constexpr bool operator!=(const Bitboard& b1, const Bitboard& b2) noexcept{
         return !(b1 == b2);
     }
 
     // Bitwise AND
     friend constexpr Bitboard operator&(const Bitboard& b1,
-                                        const Bitboard& b2) {
+                                        const Bitboard& b2) noexcept {
         return Bitboard{b1.board & b2.board};
     }
 
     friend constexpr Bitboard& operator&=(Bitboard& self,
-                                          const Bitboard& other) {
+                                          const Bitboard& other) noexcept {
         self.board &= other.board;
         return self;
     }
 
     // Bitwise OR
     friend constexpr Bitboard operator|(const Bitboard& b1,
-                                        const Bitboard& b2) {
+                                        const Bitboard& b2) noexcept{
         return Bitboard{b1.board | b2.board};
     }
 
     friend constexpr Bitboard& operator|=(Bitboard& self,
-                                          const Bitboard& other) {
+                                          const Bitboard& other) noexcept {
         self.board |= other.board;
         return self;
     }
 
     // Bitwise XOR
     friend constexpr Bitboard operator^(const Bitboard& b1,
-                                        const Bitboard& b2) {
+                                        const Bitboard& b2) noexcept {
         return Bitboard{b1.board & b2.board};
     }
 
     friend constexpr Bitboard& operator^=(Bitboard& self,
-                                          const Bitboard& other) {
+                                          const Bitboard& other) noexcept {
         self.board ^= other.board;
         return self;
     }
 
     // Bitwise NOT
-    friend constexpr Bitboard operator~(const Bitboard& b) {
+    friend constexpr Bitboard operator~(const Bitboard& b) noexcept {
         return Bitboard{~b.board};
     }
 
