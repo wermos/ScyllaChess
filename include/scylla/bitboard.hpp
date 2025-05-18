@@ -200,7 +200,7 @@ class Bitboard {
                 if (b.board & (1uz << (rank * 8 + file))) {
                     os << "1 ";
                 } else {
-                    os << "0 ";
+                    os << "· ";
                 }
             }
             os << "| " << rank + 1;
