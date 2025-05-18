@@ -1,6 +1,7 @@
 #pragma once
 
-#include <bits>
+#include <array>
+#include <bit>
 #include <cstdint>  // for the std::uint64_t type
 #include <ostream>
 #include <string>
@@ -135,24 +136,23 @@ class Bitboard {
     std::uint64_t board{0};
 };
 
+enum class PieceIdx : std::uint8_t {
+    Pawn,
+    Knight,
+    Bishop,
+    Rook,
+    Queen,
+    King,
+};
+
 // TODO: implement like this or use an std::array?
 class ChessBoard {
    private:
     // white pieces
-    Bitboard m_whiteKing;
-    Bitboard m_whiteQueens;
-    Bitboard m_whiteRooks;
-    Bitboard m_whiteBishops;
-    Bitboard m_whiteKnights;
-    Bitboard m_whitePawns;
+    std::array<Bitboard, 6> m_whitePieces;
 
     // black pieces
-    Bitboard m_blackKing;
-    Bitboard m_blackQueens;
-    Bitboard m_blackRooks;
-    Bitboard m_blackBishops;
-    Bitboard m_blackKnights;
-    Bitboard m_blackPawns;
+    std::array<Bitboard, 6> m_blackPieces;
 
     // all pieces
     Bitboard m_allWhitePieces;
