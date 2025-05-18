@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <string>
 
-#include "scylla/square.hpp"
+#include "scylla/chess_types/square.hpp"
 
 TEST_CASE("Square basic conversions", "[square]") {
     scy::Square s1 = "e4";
