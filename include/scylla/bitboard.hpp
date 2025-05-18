@@ -1,5 +1,6 @@
 #pragma once
 
+#include <bits>
 #include <cstdint>  // for the std::uint64_t type
 #include <ostream>
 #include <string>
@@ -27,6 +28,35 @@ class Bitboard {
         board &= ~(1uz << static_cast<std::size_t>(sq));
     }
 
+    constexpr std::size_t count() const noexcept {
+        // we need to use a braced-init-list here because `std::popcount` actually
+        // returns an `int`.
+        return {std::popcount(bits)};
+    }
+
+    // Bit scanning
+    constexpr std::size_t lsb() const noexcept {
+        // we need to use a braced-init-list here because `std::countr_zero` actually
+        // returns an `int`.
+        return {std::countr_zero(bits)};
+    }
+
+    constexpr std::size_t msb() const noexcept {
+        // we need to use a braced-init-list here because `std::countl_zero` actually
+        // returns an `int`.
+        return {63 - std::countl_zero(bits)};
+    }
+
+    constexpr bool empty() const noexcept {
+        return board == 0;
+    }
+
+    // is this bitboard and the other bitboard intersecting in any square?
+    constexpr bool intersects(const BitBoard& other) const noexcept {
+        return (board & other.board) != 0;
+    }
+
+    /// Operator overloads
     friend constexpr bool operator==(const Bitboard& b1, const Bitboard& b2) noexcept {
         return b1.board == b2.board;
     }
