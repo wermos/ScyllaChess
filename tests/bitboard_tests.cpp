@@ -1,9 +1,20 @@
-
 #include <catch2/catch_all.hpp>
 
 #include "scylla/bitboard.hpp"
+#include "scylla/chess_types/file.hpp"
+#include "scylla/chess_types/rank.hpp"
 
 using namespace scy;
+
+TEST_CASE("Bitboard from File and Rank", "[bitboard]") {
+    Bitboard b1(File('f'), Rank(5));
+
+    REQUIRE(b1 == Bitboard{1uz << 37});
+
+    Bitboard b2(File('h'), Rank(8));
+
+    REQUIRE(b2 == Bitboard{1uz << 63});
+}
 
 TEST_CASE("Bitboard set and unset", "[bitboard]") {
     Bitboard b;
