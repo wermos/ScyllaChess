@@ -12,9 +12,9 @@
 namespace scy {
 
 /// TODO: Figure out if using stdexcept errors is the best way to handle it.
-class Square {   
+class Square {
    public:
-    constexpr Square(File f, Rank r) noexcept : index(r.index() * 8 + f.index()) {}
+    constexpr Square(File f, Rank r) noexcept : index(8 * r + f) {}
     // Implicit conversions
     constexpr Square(const std::string& notation) : index(validate(notation)) {}
     constexpr Square(const char* notation) : Square(std::string{notation}) {}
@@ -30,10 +30,10 @@ class Square {
     }
 
     /// TODO: is this one needed?
-    constexpr operator std::string() const {
-        return {static_cast<char>('a' + (index % 8)),
-                static_cast<char>('1' + (index / 8))};
-    }
+    // constexpr operator std::string() const {
+    //     return {static_cast<char>('a' + (index % 8)),
+    //             static_cast<char>('1' + (index / 8))};
+    // }
 
     // Decomposition
     constexpr File file() const noexcept {
@@ -44,26 +44,12 @@ class Square {
         return Rank(index / 8);
     }
 
-    // Conversion
-    /// TODO: keep this or not?
-    // static constexpr Square from_algebraic(const char* str) {
-    //     return Square(File::from_char(str[0]), Rank::from_char(str[1]));
-    // }
-    
-    // constexpr std::array<char, 2> to_algebraic() const noexcept {
-    //     return {file().to_char(), rank().to_char()};
-    // }
-    
-    // constexpr std::uint8_t index() const noexcept { return index; }
-    
     // Arithmetic
-    constexpr Square offset(std::uint8_t files, std::uint8_t ranks) const {
-        /// TODO: is this function really needed?
-        return Square(
-            static_cast<std::size_t>(index + files + 8 * ranks)
-        );
-    }
-    
+    /// TODO: is this function really needed?
+    // constexpr Square offset(std::uint8_t file, std::uint8_t rank) const {
+    //     return Square(static_cast<std::size_t>(index + 8 * rank + file));
+    // }
+
     // Comparison
     auto operator<=>(const Square&) const = default;
 
