@@ -12,12 +12,6 @@
 
 namespace scy {
 
-/// store the chess piece unicode characters so that we can use them when
-/// printing the board to the console.
-// namespace pieces_literals {
-//     constexpr static std::wstring black_king =
-// }
-
 // clang-format off
 // +----+----+----+----+----+----+----+----+  +----+----+----+----+----+----+----+----+
 // | A8 | B8 | C8 | D8 | E8 | F8 | G8 | H8 |  | 56 | 57 | 58 | 59 | 60 | 61 | 62 | 63 |
@@ -52,11 +46,11 @@ class Bitboard {
     constexpr Bitboard(const File& f, const Rank& r) noexcept
         : board{1uz << (8 * r + f)} {}
 
-    // constexpr Bitboard(Rank r) noexcept :
-    //     value(RANK_MASKS[r.index()].value) {}
+    // // delegate call to copy constructor
+    // constexpr Bitboard(Rank r) noexcept : Bitboard(RANK_MASKS[r]) {}
 
-    // constexpr Bitboard(File f) noexcept :
-    //     value(FILE_MASKS[f.index()].value) {}
+    // // delegate call to copy constructor
+    // constexpr Bitboard(File f) noexcept : Bitboard(FILE_MASKS[f]) {}
 
     constexpr void set(Square sq) noexcept {
         board |= 1uz << static_cast<std::size_t>(sq);
