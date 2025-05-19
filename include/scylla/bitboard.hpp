@@ -6,9 +6,9 @@
 #include <ostream>
 #include <string>
 
-#include "scylla/chess_types/square.hpp"
 #include "scylla/chess_types/file.hpp"
 #include "scylla/chess_types/rank.hpp"
+#include "scylla/chess_types/square.hpp"
 
 namespace scy {
 
@@ -18,6 +18,7 @@ namespace scy {
 //     constexpr static std::wstring black_king =
 // }
 
+// clang-format off
 // +----+----+----+----+----+----+----+----+  +----+----+----+----+----+----+----+----+
 // | A8 | B8 | C8 | D8 | E8 | F8 | G8 | H8 |  | 56 | 57 | 58 | 59 | 60 | 61 | 62 | 63 |
 // +----+----+----+----+----+----+----+----+  +----+----+----+----+----+----+----+----+
@@ -35,14 +36,27 @@ namespace scy {
 // +----+----+----+----+----+----+----+----+  +----+----+----+----+----+----+----+----+
 // | A1 | B1 | C1 | D1 | E1 | F1 | G1 | H1 |  |  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |
 // +----+----+----+----+----+----+----+----+  +----+----+----+----+----+----+----+----+
-//
+// clang-format on
 //
 // https://pages.cs.wisc.edu/~psilord/blog/data/chess-pages/rep.html
 // a1 is the LSB, h8 is the MSB.
 class Bitboard {
    public:
     constexpr Bitboard() noexcept = default;
+
+    // important to remember that this constructor does NOT set a certain square
+    // to 1, but rather sets the internal board integer to the int that was
+    // passed in.
     constexpr explicit Bitboard(std::uint64_t num) noexcept : board{num} {}
+
+    constexpr Bitboard(const File& f, const Rank& r) noexcept
+        : board{1uz << (8 * r + f)} {}
+
+    // constexpr Bitboard(Rank r) noexcept :
+    //     value(RANK_MASKS[r.index()].value) {}
+
+    // constexpr Bitboard(File f) noexcept :
+    //     value(FILE_MASKS[f.index()].value) {}
 
     constexpr void set(Square sq) noexcept {
         board |= 1uz << static_cast<std::size_t>(sq);
@@ -52,81 +66,55 @@ class Bitboard {
         board &= ~(1uz << static_cast<std::size_t>(sq));
     }
 
-    constexpr void setFile() noexcept {
+    constexpr void setFile(File f) noexcept {}
 
-    }
+    constexpr void unsetFile(File f) noexcept {}
 
-    constexpr void unsetFile() noexcept {
+    constexpr void setRank(Rank r) noexcept {}
 
-    }
-
-    constexpr void setRank() noexcept {
-
-    }
-
-    constexpr void unsetRank() noexcept {
-
-    }
-
-    // // Rank/File interaction
-    // static constexpr std::array<Bitboard, 8> RANK_MASKS = []{
-    //     std::array<Bitboard, 8> masks{};
-    //     for(uint8_t r = 0; r < 8; ++r)
-    //         masks[r] = Bitboard(0xFFULL << (8 * r));
-    //     return masks;
-    // }();
-    
-    // static constexpr std::array<Bitboard, 8> FILE_MASKS = []{
-    //     std::array<Bitboard, 8> masks{};
-    //     for(uint8_t f = 0; f < 8; ++f)
-    //         masks[f] = Bitboard(0x0101010101010101ULL << f);
-    //     return masks;
-    // }();
-    
-    // constexpr Bitboard(Rank r) noexcept : 
-    //     value(RANK_MASKS[r.index()].value) {}
-    
-    // constexpr Bitboard(File f) noexcept : 
-    //     value(FILE_MASKS[f.index()].value) {}
-
-    /// the above doesn't work, but it's a good idea nonetheless
+    constexpr void unsetRank(Rank r) noexcept {}
 
     // // Shifts with file wrapping protection
-    // constexpr Bitboard north() const noexcept { return Bitboard(value << 8); }
-    // constexpr Bitboard south() const noexcept { return Bitboard(value >> 8); }
-    // constexpr Bitboard east() const noexcept { 
-    //     return Bitboard((value & ~FILE_MASKS[7].value) << 1); 
+    // constexpr Bitboard north() const noexcept { return Bitboard(value << 8);
+    // } constexpr Bitboard south() const noexcept { return Bitboard(value >>
+    // 8); } constexpr Bitboard east() const noexcept {
+    //     return Bitboard((value & ~FILE_MASKS[7].value) << 1);
     // }
-    // constexpr Bitboard west() const noexcept { 
-    //     return Bitboard((value & ~FILE_MASKS[0].value) >> 1); 
+    // constexpr Bitboard west() const noexcept {
+    //     return Bitboard((value & ~FILE_MASKS[0].value) >> 1);
     // }
 
     /// also good idea, should have all 8 directions
 
     constexpr std::size_t count() const noexcept {
-        // we need to use a braced-init-list here because `std::popcount` actually
-        // returns an `int`.
+        // we need to use a braced-init-list here because `std::popcount`
+        // actually returns an `int`.
         return static_cast<std::size_t>(std::popcount(board));
     }
 
     // Bit scanning
-    constexpr std::size_t lsb() const noexcept {
-        // least significant bit
-        // what is the index of the first non-zero bit (starting from the LSB, i.e. bit number 0.)
+    constexpr std::size_t ls1b() const noexcept {
+        // least significant one bit
+        // what is the index of the first non-zero bit (starting from the LSB,
+        // i.e. bit number 0.)
 
-        // we need to use a braced-init-list here because `std::countr_zero` actually
-        // returns an `int`.
+        // we need to use a braced-init-list here because `std::countr_zero`
+        // actually returns an `int`.
         return static_cast<std::size_t>(std::countr_zero(board));
     }
 
-    constexpr std::size_t msb() const noexcept {
+    constexpr std::size_t ms1b() const noexcept {
         // most significant bit
-        // what is the index of the last non-zero bit (starting from the MSB, i.e. bit number 63.)
-        
-        // we need to use a braced-init-list here because `std::countl_zero` actually
-        // returns an `int`.
+        // what is the index of the last non-zero bit (starting from the MSB,
+        // i.e. bit number 63.)
+
+        // we need to use a braced-init-list here because `std::countl_zero`
+        // actually returns an `int`.
         return static_cast<std::size_t>(63 - std::countl_zero(board));
     }
+
+    /// TODO: we can also make analogous ls0b() and ms0b() functions.
+    /// But will they ever come handy?
 
     constexpr bool empty() const noexcept {
         return board == 0;
@@ -138,11 +126,13 @@ class Bitboard {
     }
 
     /// Operator overloads
-    friend constexpr bool operator==(const Bitboard& b1, const Bitboard& b2) noexcept {
+    friend constexpr bool operator==(const Bitboard& b1,
+                                     const Bitboard& b2) noexcept {
         return b1.board == b2.board;
     }
 
-    friend constexpr bool operator!=(const Bitboard& b1, const Bitboard& b2) noexcept {
+    friend constexpr bool operator!=(const Bitboard& b1,
+                                     const Bitboard& b2) noexcept {
         return !(b1 == b2);
     }
 
@@ -188,7 +178,7 @@ class Bitboard {
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Bitboard& b) {
-        // 1 = piece, 0 = empty square
+        // 1 = piece, · = empty square
 
         os << "    a b c d e f g h\n";
         os << "  +-----------------+\n";
