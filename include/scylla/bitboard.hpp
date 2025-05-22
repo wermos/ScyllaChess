@@ -48,12 +48,6 @@ class Bitboard {
     constexpr Bitboard(const File& f, const Rank& r) noexcept
         : board{1uz << (8 * r + f)} {}
 
-    // // delegate call to copy constructor
-    // constexpr Bitboard(Rank r) noexcept : Bitboard(RANK_MASKS[r]) {}
-
-    // // delegate call to copy constructor
-    // constexpr Bitboard(File f) noexcept : Bitboard(FILE_MASKS[f]) {}
-
     constexpr void set(Square sq) noexcept {
         board |= 1uz << static_cast<std::size_t>(sq);
     }
