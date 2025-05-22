@@ -2,9 +2,9 @@
 #include <cstdint>
 #include <string>
 
-#include "scylla/chess_types/file.hpp"
-#include "scylla/chess_types/rank.hpp"
-#include "scylla/chess_types/square.hpp"
+#include "scylla/core/file.hpp"
+#include "scylla/core/rank.hpp"
+#include "scylla/core/square.hpp"
 
 TEST_CASE("Square basic conversions", "[square]") {
     scy::Square s1 = "e4";

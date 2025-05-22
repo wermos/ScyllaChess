@@ -1,8 +1,8 @@
 #include <catch2/catch_all.hpp>
 
 #include "scylla/bitboard.hpp"
-#include "scylla/chess_types/file.hpp"
-#include "scylla/chess_types/rank.hpp"
+#include "scylla/core/file.hpp"
+#include "scylla/core/rank.hpp"
 
 using namespace scy;
 
