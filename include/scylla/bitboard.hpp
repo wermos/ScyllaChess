@@ -6,9 +6,11 @@
 #include <ostream>
 #include <string>
 
-#include "scylla/chess_types/file.hpp"
-#include "scylla/chess_types/rank.hpp"
-#include "scylla/chess_types/square.hpp"
+#include "scylla/core/file.hpp"
+#include "scylla/core/rank.hpp"
+#include "scylla/core/square.hpp"
+
+// #include "scylla/masks.hpp"
 
 namespace scy {
 
