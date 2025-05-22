@@ -56,6 +56,7 @@ class Bitboard {
         board &= ~(1uz << static_cast<std::size_t>(sq));
     }
 
+    // TODO: Fill these out
     constexpr void setFile(File f) noexcept {}
 
     constexpr void unsetFile(File f) noexcept {}
@@ -153,7 +154,7 @@ class Bitboard {
     // Bitwise XOR
     friend constexpr Bitboard operator^(const Bitboard& b1,
                                         const Bitboard& b2) noexcept {
-        return Bitboard{b1.board & b2.board};
+        return Bitboard{b1.board ^ b2.board};
     }
 
     friend constexpr Bitboard& operator^=(Bitboard& self,
