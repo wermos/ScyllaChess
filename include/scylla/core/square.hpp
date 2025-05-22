@@ -5,9 +5,9 @@
 #include <stdexcept>  // required for std::invalid_argument
 #include <string>
 
-#include "scylla/chess_types/file.hpp"
-#include "scylla/chess_types/rank.hpp"
-#include "scylla/chess_types/util.hpp"
+#include "scylla/core/file.hpp"
+#include "scylla/core/rank.hpp"
+#include "scylla/util.hpp"
 
 namespace scy {
 
@@ -29,11 +29,11 @@ class Square {
         return index;
     }
 
-    /// TODO: is this one needed?
-    // constexpr operator std::string() const {
-    //     return {static_cast<char>('a' + (index % 8)),
-    //             static_cast<char>('1' + (index / 8))};
-    // }
+    /// TODO: This is tested for and everything, but is this actually needed?
+    constexpr operator std::string() const {
+        return {static_cast<char>('a' + (index % 8)),
+                static_cast<char>('1' + (index / 8))};
+    }
 
     // Decomposition
     constexpr File file() const noexcept {

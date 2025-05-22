@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <stdexcept>
 
-#include "scylla/chess_types/util.hpp"
+#include "scylla/util.hpp"
 
 namespace scy {
 
@@ -21,30 +21,16 @@ class Rank {
         : Rank(std::string{notation}) {}
 
     // Predefined ranks
-    static constexpr Rank First() noexcept {
-        return Rank(1);
-    }
-    static constexpr Rank Second() noexcept {
-        return Rank(2);
-    }
-    static constexpr Rank Third() noexcept {
-        return Rank(3);
-    }
-    static constexpr Rank Fourth() noexcept {
-        return Rank(4);
-    }
-    static constexpr Rank Fifth() noexcept {
-        return Rank(5);
-    }
-    static constexpr Rank Sixth() noexcept {
-        return Rank(6);
-    }
-    static constexpr Rank Seventh() noexcept {
-        return Rank(7);
-    }
-    static constexpr Rank Eighth() noexcept {
-        return Rank(8);
-    }
+    // clang-format off
+    static constexpr Rank First()   noexcept { return Rank(1); }
+    static constexpr Rank Second()  noexcept { return Rank(2); }
+    static constexpr Rank Third()   noexcept { return Rank(3); }
+    static constexpr Rank Fourth()  noexcept { return Rank(4); }
+    static constexpr Rank Fifth()   noexcept { return Rank(5); }
+    static constexpr Rank Sixth()   noexcept { return Rank(6); }
+    static constexpr Rank Seventh() noexcept { return Rank(7); }
+    static constexpr Rank Eighth()  noexcept { return Rank(8); }
+    // clang-format on
 
     /// having both std::uint8_t and std::size_t overloads causes ambiguity in
     /// the Bitboard constructor
@@ -62,6 +48,7 @@ class Rank {
     constexpr Rank next() const noexcept {
         return Rank((rank + 1) % 8);
     }
+    
     constexpr Rank previous() const noexcept {
         return Rank((rank - 1) % 8);
     }
