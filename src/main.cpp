@@ -2,7 +2,7 @@
 #include <iostream>
 
 #include "scylla/bitboard.hpp"
-#include "scylla/chess_types/square.hpp"
+#include "scylla/core/square.hpp"
 
 using namespace scy;
 
