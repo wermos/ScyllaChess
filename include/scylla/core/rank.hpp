@@ -17,6 +17,7 @@ class Rank {
     /// TODO: these might not be needed
     explicit constexpr Rank(const std::string& notation)
         : rank(validate(notation)) {}
+
     explicit constexpr Rank(const char* notation)
         : Rank(std::string{notation}) {}
 
@@ -34,25 +35,40 @@ class Rank {
 
     /// having both std::uint8_t and std::size_t overloads causes ambiguity in
     /// the Bitboard constructor
-    // constexpr operator std::size_t() const noexcept {
+    // constexpr operator std::uint8_t() const noexcept {
     //     return rank;
     // }
 
-    constexpr operator std::uint8_t() const noexcept {
+    // `std::size_t` is the "more proper" overload to have because this will
+    // allow for indexing into the mask arrays, which is one of the intended
+    // usecases.
+    constexpr operator std::size_t() const noexcept {
         return rank;
     }
 
-    // Iterators
-    /// TODO: It might make more sense to just overload operator++ instead. and
-    /// operator--.
-    constexpr Rank next() const noexcept {
-        return Rank((rank + 1) % 8);
-    }
-    
-    constexpr Rank previous() const noexcept {
-        return Rank((rank - 1) % 8);
+    // "Iterators"
+    constexpr Rank& operator++() {
+        rank = (rank + 1) % 8;
+        return *this;
     }
 
+    constexpr Rank operator++(int) {
+        Rank temp = *this;
+        ++(*this);
+        return temp;
+    }
+
+    constexpr Rank& operator--() {
+        rank = (rank - 1) % 8;
+        return *this;
+    }
+
+    constexpr Rank operator--(int) {
+        Rank temp = *this;
+        --(*this);
+        return temp;
+    }
+    
     // Comparison
     auto operator<=>(const Rank&) const = default;
 

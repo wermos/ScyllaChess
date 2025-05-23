@@ -34,20 +34,38 @@ class File {
     
     /// having both std::uint8_t and std::size_t overloads causes ambiguity in
     /// the Bitboard constructor
-    // constexpr operator std::size_t() const noexcept {
+    // constexpr operator std::uint8_t() const noexcept {
     //     return file;
     // }
 
-    constexpr operator std::uint8_t() const noexcept {
+    // `std::size_t` is the "more proper" overload to have because this will
+    // allow for indexing into the mask arrays, which is one of the intended
+    // usecases.
+    constexpr operator std::size_t() const noexcept {
         return file;
     }
 
-    // Iterators
-    constexpr File next() const noexcept {
-        return File((file + 1) % 8);
+    // "Iterators"
+    constexpr File& operator++() {
+        file = (file + 1) % 8;
+        return *this;
     }
-    constexpr File previous() const noexcept {
-        return File((file - 1) % 8);
+
+    constexpr File operator++(int) {
+        File temp = *this;
+        ++(*this);
+        return temp;
+    }
+
+    constexpr File& operator--() {
+        file = (file - 1) % 8;
+        return *this;
+    }
+
+    constexpr File operator--(int) {
+        File temp = *this;
+        --(*this);
+        return temp;
     }
 
     // Comparison
