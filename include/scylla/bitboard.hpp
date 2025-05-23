@@ -57,13 +57,13 @@ class Bitboard {
     }
 
     // TODO: Fill these out
-    constexpr void setFile(File f) noexcept {}
+    // constexpr void setFile(File f) noexcept {}
 
-    constexpr void unsetFile(File f) noexcept {}
+    // constexpr void unsetFile(File f) noexcept {}
 
-    constexpr void setRank(Rank r) noexcept {}
+    // constexpr void setRank(Rank r) noexcept {}
 
-    constexpr void unsetRank(Rank r) noexcept {}
+    // constexpr void unsetRank(Rank r) noexcept {}
 
     // // Shifts with file wrapping protection
     // constexpr Bitboard north() const noexcept { return Bitboard(value << 8);
