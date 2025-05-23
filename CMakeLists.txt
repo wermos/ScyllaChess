@@ -14,6 +14,12 @@ file(GLOB_RECURSE SOURCES
 
 add_executable(scylla ${SOURCES})
 
+# -Werror
+target_compile_options(scylla PRIVATE
+    $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
+    $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wpedantic -Werror>
+)
+
 if (BUILD_TESTING)
     add_subdirectory(tests)
 endif()
