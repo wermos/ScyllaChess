@@ -2,6 +2,9 @@
 
 #include <cstdint>
 #include <stdexcept>
+#include <string>
+#include <string_view>
+#include <type_traits>
 
 #include "scylla/util.hpp"
 
@@ -72,18 +75,22 @@ class File {
     auto operator<=>(const File&) const = default;
 
    private:
-    constexpr static std::size_t validate(const std::string& s) {
-        if (s.length() != 1) {
-            throw std::invalid_argument("Invalid file");
+    constexpr static std::size_t validate(std::string_view sv) {
+        if (std::is_constant_evaluated()) {
+
+        } else {
+            if (sv.length() != 1) {
+                throw std::invalid_argument("Invalid file");
+            }
+
+            char file = util::tolower(sv[0]);
+
+            if (file < 'a' || file > 'h') {
+                throw std::invalid_argument("Invalid file");
+            }
+
+            return file - 'a';
         }
-
-        char file = util::tolower(s[0]);
-
-        if (file < 'a' || file > 'h') {
-            throw std::invalid_argument("Invalid file");
-        }
-
-        return file - 'a';
     }
 
     std::uint8_t file;
