@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.31)
 
 add_subdirectory(../libs/Catch2
                  ${CMAKE_BINARY_DIR}/Catch2-build # Binary directory
