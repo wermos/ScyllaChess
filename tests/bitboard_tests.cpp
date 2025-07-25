@@ -1,4 +1,5 @@
 #include <catch2/catch_all.hpp>
+#include <libassert/assert-catch2.hpp>
 
 #include "scylla/bitboard.hpp"
 #include "scylla/core/file.hpp"

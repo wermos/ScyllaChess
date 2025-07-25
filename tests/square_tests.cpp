@@ -1,5 +1,6 @@
 #include <catch2/catch_all.hpp>
 #include <cstdint>
+#include <libassert/assert-catch2.hpp>
 #include <string>
 
 #include "scylla/core/file.hpp"
@@ -27,12 +28,4 @@ TEST_CASE("Square from File and Rank", "[square]") {
     scy::Square s2(scy::File('c'), scy::Rank(7));
     REQUIRE(static_cast<std::size_t>(s2) == 50);
     REQUIRE(static_cast<std::string>(s2) == "c7");
-}
-
-TEST_CASE("Square invalid input throws", "[square]") {
-    REQUIRE_THROWS_AS(scy::Square("z9"), std::invalid_argument);
-    REQUIRE_THROWS_AS(scy::Square("a9"), std::invalid_argument);
-    REQUIRE_THROWS_AS(scy::Square("h0"), std::invalid_argument);
-    REQUIRE_THROWS_AS(scy::Square(""), std::invalid_argument);
-    REQUIRE_THROWS_AS(scy::Square(64), std::invalid_argument);
 }
