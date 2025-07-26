@@ -1,25 +1,20 @@
 #pragma once
 
 #include <cstdint>
-#include <stdexcept>
-
+#include <libassert/assert.hpp>
+#include <string_view>
+#include <type_traits>
 #include "scylla/util.hpp"
 
 namespace scy {
 
 class Rank {
-   public:
-    explicit constexpr Rank(std::uint8_t r)
-        : rank((r >= 1 && r <= 8)
-                   ? r - 1
-                   : throw std::invalid_argument("Invalid rank")) {}
+public:
+    constexpr explicit Rank(std::uint8_t r) : m_rank{ validate_uint8(r) } {}
 
     /// TODO: these might not be needed
-    explicit constexpr Rank(const std::string& notation)
-        : rank(validate(notation)) {}
-
-    explicit constexpr Rank(const char* notation)
-        : Rank(std::string{notation}) {}
+    constexpr explicit Rank(std::string_view sv) : m_rank{ validate(sv) } {}
+    constexpr explicit Rank(const char* s) : Rank(std::string_view{s}) {}
 
     // Predefined ranks
     // clang-format off
@@ -36,19 +31,19 @@ class Rank {
     /// having both std::uint8_t and std::size_t overloads causes ambiguity in
     /// the Bitboard constructor
     // constexpr operator std::uint8_t() const noexcept {
-    //     return rank;
+    //     return m_rank;
     // }
 
     // `std::size_t` is the "more proper" overload to have because this will
     // allow for indexing into the mask arrays, which is one of the intended
     // usecases.
     constexpr operator std::size_t() const noexcept {
-        return rank;
+        return m_rank;
     }
 
     // "Iterators"
     constexpr Rank& operator++() {
-        rank = (rank + 1) % 8;
+        m_rank = (m_rank + 1) % 8;
         return *this;
     }
 
@@ -59,7 +54,7 @@ class Rank {
     }
 
     constexpr Rank& operator--() {
-        rank = (rank - 1) % 8;
+        m_rank = (m_rank - 1) % 8;
         return *this;
     }
 
@@ -72,24 +67,75 @@ class Rank {
     // Comparison
     auto operator<=>(const Rank&) const = default;
 
-   private:
-    constexpr static std::size_t validate(const std::string& s) {
-        if (s.length() != 1) {
-            throw std::invalid_argument("Invalid rank");
-        }
+private:
+    // static constexpr std::uint8_t validate_uint8(std::uint8_t r) {
+    //     if (std::is_constant_evaluated()) {
+    //         // Compile-time validation with static_assert
+    //         static_assert(r >= 1 && r <= 8, 
+    //                      "Rank must be in range 1-8");
+    //         return r - 1;
+    //     } else {
+    //         // Runtime validation with libassert
+    //         ASSERT(r >= 1 && r <= 8, 
+    //                "Invalid rank number:", r, "Expected: 1-8");
+    //         return r - 1;
+    //     }
+    // }
 
-        char rank = s[0];
+    // static constexpr std::uint8_t validate(std::string_view sv) {
+    //     if (std::is_constant_evaluated()) {
+    //         // Compile-time validation
+    //         static_assert(sv.size() == 1, 
+    //                      "Rank notation must contain exactly one character");
+    //         return validate_char(sv[0]);
+    //     } else {
+    //         // Runtime validation with libassert rich diagnostics
+    //         ASSERT(sv.size() == 1, 
+    //                "Rank notation length error. Expected: 1 character, got:", 
+    //                sv.size(), "characters in string:", sv);
+    //         return validate_char(sv[0]);
+    //     }
+    // }
 
-        if (rank < '1' || rank > '8') {
-            throw std::invalid_argument("Invalid rank");
-        }
+    // static constexpr std::uint8_t validate_char(char c) {
+    //     if (std::is_constant_evaluated()) {
+    //         // Compile-time validation with static_assert
+    //         static_assert(c >= '1' && c <= '8',
+    //                      "Rank character must be in range '1'-'8'");
+    //         return c - '1';
+    //     } else {
+    //         // Runtime validation with libassert
+    //         ASSERT(c >= '1' && c <= '8', 
+    //                "Invalid rank character:", c, "Expected: '1'-'8'");
+    //         return c - '1';
+    //     }
+    // }
 
-        return rank - '1';
+    static constexpr std::uint8_t validate_uint8(std::uint8_t r) {
+        // Runtime validation with libassert
+        ASSERT(r >= 1 && r <= 8, 
+                "Invalid rank number:", r, "Expected: 1-8");
+        return r - 1;
     }
 
-    std::uint8_t rank;
+    static constexpr std::uint8_t validate(std::string_view sv) {
+        // Runtime validation with libassert rich diagnostics
+        ASSERT(sv.size() == 1, 
+                "Rank notation length error. Expected: 1 character, got:", 
+                sv.size(), "characters in string:", sv);
+        return validate_char(sv[0]);
+    }
+
+    static constexpr std::uint8_t validate_char(char c) {
+        // Runtime validation with libassert
+        ASSERT(c >= '1' && c <= '8', 
+                "Invalid rank character:", c, "Expected: '1'-'8'");
+        return c - '1';
+    }
+
+    std::uint8_t m_rank;
     // internally stores 0-7,
     // takes user input between 1-8
 };
 
-}  // namespace scy
+} // namespace scy
