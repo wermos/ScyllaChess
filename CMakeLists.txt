@@ -7,13 +7,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 enable_language(CXX)
 
+# Enable testing to get the built-in 'test' target
+enable_testing()
+
 file(GLOB_RECURSE LIB_SOURCES CONFIGURE_DEPENDS src/*.cpp)
 list(REMOVE_ITEM LIB_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
 add_library(scylla_engine ${LIB_SOURCES})
 target_include_directories(scylla_engine PUBLIC include)
 
-# Configure libassert options BEFORE creating the interface target
+# Configure libassert options
 set(LIBASSERT_USE_EXTERNAL_CPPTRACE
     OFF
     CACHE BOOL "Disable external cpptrace")
@@ -42,6 +45,20 @@ target_compile_options(
     PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
             $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wpedantic -Werror>)
 
-if(BUILD_TESTING)
-    add_subdirectory(tests)
-endif()
+# Add tests subdirectory - include in 'all' target
+add_subdirectory(tests)
+
+# Custom target: Build only the core library
+add_custom_target(
+    library
+    DEPENDS scylla_engine
+    COMMENT "Building core library only")
+
+# Custom target: Build library + main executable (engine)
+add_custom_target(
+    engine
+    DEPENDS scylla_engine scylla
+    COMMENT "Building library and main executable")
+
+# Built-in targets: 'test' - runs tests (created by enable_testing()) 'all' -
+# builds everything: library + executable + tests
