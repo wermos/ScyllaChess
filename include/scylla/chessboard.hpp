@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #include "scylla/bitboard.hpp"
 
@@ -17,9 +17,8 @@ enum class Piece : std::uint8_t {
 class ChessBoard {
 
     constexpr ChessBoard() {
-        /// TODO: should the constructor make a new default-position chess board or should that
-        /// be left to a `new()` function?
-
+        /// TODO: should the constructor make a new default-position chess board
+        /// or should that be left to a `new()` function?
     }
 
    private:
@@ -35,4 +34,4 @@ class ChessBoard {
     Bitboard m_allPieces;
 };
 
-}
+}  // namespace scy

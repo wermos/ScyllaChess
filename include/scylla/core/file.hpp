@@ -34,7 +34,7 @@ class File {
     static constexpr File G() noexcept { return File('g'); }    
     static constexpr File H() noexcept { return File('h'); }
     // clang-format on
-    
+
     /// having both std::uint8_t and std::size_t overloads causes ambiguity in
     /// the Bitboard constructor
     // constexpr operator std::uint8_t() const noexcept {

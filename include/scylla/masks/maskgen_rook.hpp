@@ -19,7 +19,8 @@ namespace scy::maskgen {
             // had a rook on a1, the relevant occupancy bits will be from a2-a7
             // and b1-g1.
 
-            // this functionally works out to taking the XOR between the rank and the file the rook is on.
+            // this functionally works out to taking the XOR between the rank
+            // and the file the rook is on.
             const Square sq{f, r};
             const Bitboard file{fileMasks[f]}, rank{rankMasks[r]};
 
@@ -32,4 +33,4 @@ namespace scy::maskgen {
     return rookATKMasks(rankMasks(), fileMasks());
 }
 
-}
+}  // namespace scy::maskgen

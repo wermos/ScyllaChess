@@ -68,7 +68,7 @@ class Rank {
         --(*this);
         return temp;
     }
-    
+
     // Comparison
     auto operator<=>(const Rank&) const = default;
 

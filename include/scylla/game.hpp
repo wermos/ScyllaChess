@@ -20,13 +20,14 @@ class GameHistory {};
 
 struct GameState {
     Color sideToMove;
-    
-    CastlingInfo castling;
-    
-    std::size_t numPlysPlayed:
 
-    std::optional<Square> enPassantSquare;
-    
+    CastlingInfo castling;
+
+    std::size_t numPlysPlayed :
+
+        std::optional<Square>
+            enPassantSquare;
+
     std::size_t moveNumber;
     std::uint64_t zobristKey;
 };
@@ -35,4 +36,4 @@ class Game {};
 
 class Zobrist {};
 
-}
+}  // namespace scy
