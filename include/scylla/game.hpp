@@ -13,7 +13,7 @@ enum class Color {
 };
 
 // which side can castle, etc. encoded as bitflags.
-// we only need 4 bits.
+// we only need 2 bits. But most people use 4 bits for some reason.
 struct CastlingInfo {};
 
 class GameHistory {};

@@ -1,9 +1,9 @@
-// include/scylla/masks.hpp
+// include/scylla/masks/masks.hpp
 #pragma once
 
 #include <array>
 
-#include "include/scylla/maskgen.hpp"
+#include "scylla/maskgen.hpp"
 #include "scylla/bitboard.hpp"
 
 namespace scy {
