@@ -3,8 +3,8 @@
 
 #include <array>
 
-#include "scylla/maskgen.hpp"
 #include "scylla/bitboard.hpp"
+#include "scylla/maskgen.hpp"
 
 namespace scy {
 inline constexpr std::array<Bitboard, 8> rankMasks = maskgen::rankMasks();

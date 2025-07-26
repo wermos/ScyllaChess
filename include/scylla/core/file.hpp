@@ -3,16 +3,17 @@
 #include <libassert/assert.hpp>
 #include <string_view>
 #include <type_traits>
+
 #include "scylla/util.hpp"
 
 namespace scy {
 
 class File {
-public:
-    constexpr explicit File(char c) : m_file{ validate_char(c) } {}
+   public:
+    constexpr explicit File(char c) : m_file{validate_char(c)} {}
 
     /// TODO: these might not be needed
-    constexpr explicit File(std::string_view sv) : m_file{ validate(sv) } {}
+    constexpr explicit File(std::string_view sv) : m_file{validate(sv)} {}
     constexpr explicit File(const char* s) : File(std::string_view{s}) {}
 
     // Predefined files
@@ -66,7 +67,7 @@ public:
     // Comparison
     auto operator<=>(const File&) const = default;
 
-private:
+   private:
     // static constexpr std::uint8_t validate_char(const char c) {
     //     if (std::is_constant_evaluated()) {
     //         // Compile-time validation with static_assert
@@ -77,21 +78,22 @@ private:
     //     } else {
     //         // Runtime validation with libassert
     //         char file = util::tolower(c);
-    //         ASSERT(file >= 'a' && file <= 'h', 
-    //                "Invalid file character:", c, "Expected: 'a'-'h', got:", file);
+    //         ASSERT(file >= 'a' && file <= 'h',
+    //                "Invalid file character:", c, "Expected: 'a'-'h', got:",
+    //                file);
     //         return file - 'a';
     //     }
     // }
     // static constexpr std::uint8_t validate(std::string_view sv) {
     //     if (std::is_constant_evaluated()) {
     //         // Compile-time validation
-    //         static_assert(sv.size() == 1, 
+    //         static_assert(sv.size() == 1,
     //                      "File notation must contain exactly one character");
     //         return validate_char(sv[0]);
     //     } else {
     //         // Runtime validation with libassert rich diagnostics
-    //         ASSERT(sv.size() == 1, 
-    //                "File notation length error. Expected: 1 character, got:", 
+    //         ASSERT(sv.size() == 1,
+    //                "File notation length error. Expected: 1 character, got:",
     //                sv.size(), "characters in string:", sv);
     //         return validate_char(sv[0]);
     //     }
@@ -99,13 +101,16 @@ private:
 
     static constexpr std::uint8_t validate_char(const char c) {
         char file = util::tolower(c);
-        ASSERT(file >= 'a' && file <= 'h', "Invalid file character:", c, "Expected: 'a'-'h', got:", file);
+        ASSERT(file >= 'a' && file <= 'h', "Invalid file character:", c,
+               "Expected: 'a'-'h', got:", file);
         return file - 'a';
     }
 
     static constexpr std::uint8_t validate(std::string_view sv) {
         // Runtime validation with libassert rich diagnostics
-        ASSERT(sv.size() == 1, "File notation length error. Expected: 1 character, got:", sv.size(), "characters in string:", sv);
+        ASSERT(sv.size() == 1,
+               "File notation length error. Expected: 1 character, got:",
+               sv.size(), "characters in string:", sv);
         return validate_char(sv[0]);
     }
 
@@ -114,4 +119,4 @@ private:
     // takes user input between a-h
 };
 
-} // namespace scy
+}  // namespace scy

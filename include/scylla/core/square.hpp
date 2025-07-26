@@ -14,12 +14,13 @@
 namespace scy {
 
 class Square {
-public:
+   public:
     constexpr Square(File f, Rank r) noexcept : m_index(8 * r + f) {}
-    
+
     // String-based constructors
     constexpr Square(std::string_view notation) : m_index(validate(notation)) {}
-    constexpr Square(const char* notation) : Square(std::string_view{notation}) {}
+    constexpr Square(const char* notation)
+        : Square(std::string_view{notation}) {}
 
     // Index-based constructor
     constexpr Square(std::size_t idx) : m_index(validate_index(idx)) {}
@@ -52,7 +53,7 @@ public:
     // Comparison
     auto operator<=>(const Square&) const = default;
 
-private:
+   private:
     // static constexpr std::size_t validate_index(std::size_t idx) {
     //     if (std::is_constant_evaluated()) {
     //         // Compile-time validation with static_assert
@@ -60,7 +61,7 @@ private:
     //         return idx;
     //     } else {
     //         // Runtime validation with libassert
-    //         ASSERT(idx < 64, 
+    //         ASSERT(idx < 64,
     //                "Invalid square index:", idx, "Expected: 0-63");
     //         return idx;
     //     }
@@ -69,19 +70,22 @@ private:
     // static constexpr std::size_t validate(std::string_view notation) {
     //     if (std::is_constant_evaluated()) {
     //         // Compile-time validation
-    //         static_assert(notation.size() == 2, 
-    //                      "Square notation must contain exactly two characters");
+    //         static_assert(notation.size() == 2,
+    //                      "Square notation must contain exactly two
+    //                      characters");
     //         return validate_notation_chars(notation[0], notation[1]);
     //     } else {
     //         // Runtime validation with libassert rich diagnostics
-    //         ASSERT(notation.size() == 2, 
-    //                "Square notation length error. Expected: 2 characters, got:", 
-    //                notation.size(), "characters in string:", notation);
+    //         ASSERT(notation.size() == 2,
+    //                "Square notation length error. Expected: 2 characters,
+    //                got:", notation.size(), "characters in string:",
+    //                notation);
     //         return validate_notation_chars(notation[0], notation[1]);
     //     }
     // }
 
-    // static constexpr std::size_t validate_notation_chars(char file_char, char rank_char) {
+    // static constexpr std::size_t validate_notation_chars(char file_char, char
+    // rank_char) {
     //     if (std::is_constant_evaluated()) {
     //         // Compile-time validation with static_assert
     //         char file = util::tolower(file_char);
@@ -93,45 +97,45 @@ private:
     //     } else {
     //         // Runtime validation with libassert
     //         char file = util::tolower(file_char);
-    //         ASSERT(file >= 'a' && file <= 'h', 
-    //                "Invalid file character:", file_char, 
+    //         ASSERT(file >= 'a' && file <= 'h',
+    //                "Invalid file character:", file_char,
     //                "Lowercased:", file, "Expected: 'a'-'h'");
-    //         ASSERT(rank_char >= '1' && rank_char <= '8', 
-    //                "Invalid rank character:", rank_char, "Expected: '1'-'8'");
+    //         ASSERT(rank_char >= '1' && rank_char <= '8',
+    //                "Invalid rank character:", rank_char, "Expected:
+    //                '1'-'8'");
     //         return (rank_char - '1') * 8 + (file - 'a');
     //     }
     // }
 
     static constexpr std::size_t validate_index(std::size_t idx) {
         // Runtime validation with libassert
-        ASSERT(idx < 64, 
-                "Invalid square index:", idx, "Expected: 0-63");
+        ASSERT(idx < 64, "Invalid square index:", idx, "Expected: 0-63");
         return idx;
     }
 
     static constexpr std::size_t validate(std::string_view notation) {
         // Runtime validation with libassert rich diagnostics
-        ASSERT(notation.size() == 2, 
-                "Square notation length error. Expected: 2 characters, got:", 
-                notation.size(), "characters in string:", notation);
+        ASSERT(notation.size() == 2,
+               "Square notation length error. Expected: 2 characters, got:",
+               notation.size(), "characters in string:", notation);
         return validate_notation_chars(notation[0], notation[1]);
     }
 
-    static constexpr std::size_t validate_notation_chars(char file_char, char rank_char) {
+    static constexpr std::size_t validate_notation_chars(char file_char,
+                                                         char rank_char) {
         // Runtime validation with libassert
         char file = util::tolower(file_char);
-        ASSERT(file >= 'a' && file <= 'h', 
-                "Invalid file character:", file_char, 
-                "Lowercased:", file, "Expected: 'a'-'h'");
-        ASSERT(rank_char >= '1' && rank_char <= '8', 
-                "Invalid rank character:", rank_char, "Expected: '1'-'8'");
+        ASSERT(file >= 'a' && file <= 'h', "Invalid file character:", file_char,
+               "Lowercased:", file, "Expected: 'a'-'h'");
+        ASSERT(rank_char >= '1' && rank_char <= '8',
+               "Invalid rank character:", rank_char, "Expected: '1'-'8'");
         return (rank_char - '1') * 8 + (file - 'a');
     }
 
     std::size_t m_index;
 };
 
-} // namespace scy
+}  // namespace scy
 
 // User-defined literal operator
 constexpr scy::Square operator""_sq(const char* str, std::size_t) {
