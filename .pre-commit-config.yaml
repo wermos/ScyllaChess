@@ -5,7 +5,7 @@ repos:
     hooks:
       - id: clang-format
         name: Format C/C++ code with clang-format
-        stages: [pre-push]
+        stages: [pre-commit, pre-push]
         files: \.(cpp|h|hpp|ipp)$
         args: [--style=file]
 
@@ -15,6 +15,6 @@ repos:
     hooks:
       - id: cmake-format
         name: Format CMakeLists.txt and .cmake files
-        stages: [pre-push]
+        stages: [pre-commit, pre-push]
         files: (CMakeLists\.txt|\.cmake)$
         args: [--in-place]
