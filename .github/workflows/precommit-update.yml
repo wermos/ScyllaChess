@@ -22,7 +22,7 @@ jobs:
         run: pip install pre-commit
         
       - name: Run pre-commit auto-update
-        run: pre-commit auto-update
+        run: pre-commit autoupdate
         
       - name: Create or Update Pull Request
         uses: peter-evans/create-pull-request@v7
