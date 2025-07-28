@@ -26,8 +26,11 @@ jobs:
         cmake-version: '3.31'
 
     - name: Configure CMake
-      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DBUILD_TESTING=ON
+      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
 
+    - name: Build tests
+      run: cmake --build build --target tests
+    
     - name: Run tests
-      run: cmake --build build --target test
+      run: ctest --test-dir build --output-on-failure
 
