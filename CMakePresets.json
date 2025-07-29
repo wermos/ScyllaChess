@@ -1,0 +1,194 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 31,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "linux-debug",
+            "displayName": "Linux Debug",
+            "description": "Debug build for Linux",
+            "binaryDir": "${sourceDir}/build/debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_CXX_STANDARD": "23",
+                "CMAKE_CXX_STANDARD_REQUIRED": "ON"
+            }
+        },
+        {
+            "name": "linux-release",
+            "displayName": "Linux Release",
+            "description": "Release build for Linux",
+            "binaryDir": "${sourceDir}/build/release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_CXX_STANDARD": "23",
+                "CMAKE_CXX_STANDARD_REQUIRED": "ON"
+            }
+        },
+        {
+            "name": "macos-debug",
+            "displayName": "macOS Debug",
+            "description": "Debug build for macOS",
+            "binaryDir": "${sourceDir}/build/debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_CXX_STANDARD": "23",
+                "CMAKE_CXX_STANDARD_REQUIRED": "ON"
+            }
+        },
+        {
+            "name": "macos-release",
+            "displayName": "macOS Release",
+            "description": "Release build for macOS",
+            "binaryDir": "${sourceDir}/build/release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_CXX_STANDARD": "23",
+                "CMAKE_CXX_STANDARD_REQUIRED": "ON"
+            }
+        },
+        {
+            "name": "windows-debug",
+            "displayName": "Windows Debug",
+            "description": "Debug build for Windows",
+            "binaryDir": "${sourceDir}/build/debug",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_CXX_STANDARD": "23",
+                "CMAKE_CXX_STANDARD_REQUIRED": "ON"
+            }
+        },
+        {
+            "name": "windows-release",
+            "displayName": "Windows Release",
+            "description": "Release build for Windows",
+            "binaryDir": "${sourceDir}/build/release",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_CXX_STANDARD": "23",
+                "CMAKE_CXX_STANDARD_REQUIRED": "ON"
+            }
+        },
+        {
+            "name": "debug",
+            "displayName": "Debug (Auto-detect)",
+            "description": "Debug build with auto platform detection",
+            "binaryDir": "${sourceDir}/build/debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_CXX_STANDARD": "23",
+                "CMAKE_CXX_STANDARD_REQUIRED": "ON"
+            }
+        },
+        {
+            "name": "release",
+            "displayName": "Release (Auto-detect)",
+            "description": "Release build with auto platform detection",
+            "binaryDir": "${sourceDir}/build/release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_CXX_STANDARD": "23",
+                "CMAKE_CXX_STANDARD_REQUIRED": "ON"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "debug-library",
+            "configurePreset": "debug",
+            "displayName": "Build Library (Debug)",
+            "targets": ["library"]
+        },
+        {
+            "name": "debug-engine",
+            "configurePreset": "debug",
+            "displayName": "Build Engine (Debug)",
+            "targets": ["engine"]
+        },
+        {
+            "name": "debug-tests",
+            "configurePreset": "debug",
+            "displayName": "Build Tests (Debug)",
+            "targets": ["tests"]
+        },
+        {
+            "name": "debug-all",
+            "configurePreset": "debug",
+            "displayName": "Build All (Debug)",
+            "targets": ["all"]
+        },
+        {
+            "name": "release-library",
+            "configurePreset": "release",
+            "displayName": "Build Library (Release)",
+            "targets": ["library"]
+        },
+        {
+            "name": "release-engine",
+            "configurePreset": "release",
+            "displayName": "Build Engine (Release)",
+            "targets": ["engine"]
+        },
+        {
+            "name": "release-all",
+            "configurePreset": "release",
+            "displayName": "Build All (Release)",
+            "targets": ["all"]
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "debug-tests",
+            "configurePreset": "debug",
+            "displayName": "Run Tests (Debug)",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "jobs": 4
+            }
+        },
+        {
+            "name": "debug-tests-verbose",
+            "configurePreset": "debug",
+            "displayName": "Run Tests Verbose (Debug)",
+            "output": {
+                "verbosity": "verbose",
+                "outputOnFailure": true
+            }
+        }
+    ]
+}
