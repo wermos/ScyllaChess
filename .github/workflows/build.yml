@@ -25,9 +25,87 @@ jobs:
       with:
         cmake-version: '3.31'
 
+    - name: Install ccache (Ubuntu)
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ccache
+
+    - name: Install ccache (macOS)
+      if: matrix.os == 'macos-latest'
+      run: brew install ccache
+
+    - name: Setup ccache
+      run: |
+        ccache --set-config=cache_dir=$HOME/.ccache
+        ccache --set-config=max_size=1G
+        ccache --set-config=compression=true
+        ccache --zero-stats
+
+    - name: Cache CMake dependency source code
+      uses: actions/cache@v4
+      env:
+        cache-name: cache-cmake-dependency-sources
+      with:
+        # Cache git submodules and any FetchContent sources
+        path: |
+          libs/
+          ${{github.workspace}}/build/_deps/*-src
+        # Cache hash dependent on CMakeLists files and submodule states
+        key: ${{ env.cache-name }}-${{ hashFiles('**/CMakeLists.txt', 'libs/**/.git/HEAD', 'libs/**/.git/refs/heads/**') }}
+        # Acceptable to reuse caches for different CMakeLists content if exact match not available
+        restore-keys: |
+          ${{ env.cache-name }}-
+
+    - name: Cache CMake dependency build objects
+      uses: actions/cache@v4
+      env:
+        cache-name: cache-cmake-dependency-builds
+      with:
+        # Cache built dependencies (libassert, Catch2, etc.)
+        path: |
+          ${{github.workspace}}/build/_deps/*-build
+          ${{github.workspace}}/build/_deps/*-subbuild
+          ${{github.workspace}}/build/libassert-build
+          ${{github.workspace}}/build/Catch2-build
+        # Cache hash dependent on CMakeLists files, OS and build type since build artifacts are platform/config specific
+        key: ${{ env.cache-name }}-${{ matrix.os }}-${{ matrix.build_type }}-${{ hashFiles('**/CMakeLists.txt', 'libs/**/.git/HEAD') }}
+        # Reuse caches as long as OS and build type match exactly
+        restore-keys: |
+          ${{ env.cache-name }}-${{ matrix.os }}-${{ matrix.build_type }}-
+
+    - name: Cache ccache
+      uses: actions/cache@v4
+      with:
+        path: ${{ runner.os == 'macOS' && '~/Library/Caches/ccache' || '~/.ccache' }}
+        key: ccache-${{ runner.os }}-${{ matrix.build_type }}-${{ hashFiles('include/**/*.hpp', 'src/**/*.cpp', 'tests/**/*.cpp') }}
+        restore-keys: |
+          ccache-${{ runner.os }}-${{ matrix.build_type }}-
+          ccache-${{ runner.os }}-
+
+    - name: Cache main build directory
+      uses: actions/cache@v4
+      with:
+        path: |
+          build
+          !build/_deps
+          !build/libassert-build
+          !build/Catch2-build
+        key: cmake-main-build-${{ runner.os }}-${{ matrix.build_type }}-${{ hashFiles('include/**/*.hpp', 'src/**/*.cpp', 'tests/**/*.cpp', '**/CMakeLists.txt') }}
+        restore-keys: |
+          cmake-main-build-${{ runner.os }}-${{ matrix.build_type }}-
+          cmake-main-build-${{ runner.os }}-
+
     - name: Configure CMake
-      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+      run: |
+        export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+        cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
+          -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
 
     - name: Build engine
-      run: cmake --build build --target engine --parallel 4
+      run: |
+        export PATH="/usr/lib/ccache:/usr/local/opt/ccache/libexec:$PATH"
+        cmake --build build --target engine --parallel 4
 
+    - name: Show ccache stats
+      run: ccache --show-stats
