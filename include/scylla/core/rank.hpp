@@ -1,3 +1,4 @@
+// include/scylla/core/rank.hpp
 #pragma once
 
 #include <cstdint>

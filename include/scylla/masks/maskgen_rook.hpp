@@ -1,3 +1,4 @@
+// include/scylla/masks/maskgen_rook.hpp
 #pragma once
 
 #include <array>

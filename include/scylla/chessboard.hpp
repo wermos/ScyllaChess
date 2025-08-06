@@ -1,3 +1,4 @@
+// include/scylla/chessboard.hpp
 #pragma once
 
 #include <cstdint>

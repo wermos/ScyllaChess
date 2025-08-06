@@ -1,3 +1,4 @@
+// tests/square_tests.cpp
 #include <catch2/catch_all.hpp>
 #include <cstdint>
 #include <libassert/assert-catch2.hpp>

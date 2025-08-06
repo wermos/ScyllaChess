@@ -1,3 +1,4 @@
+// include/scylla/masks/maskgen/antidiagonal.hpp
 #pragma once
 
 #include <cstdint>

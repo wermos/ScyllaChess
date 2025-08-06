@@ -1,3 +1,4 @@
+// include/scylla/bitboard.hpp
 #pragma once
 
 #include <array>

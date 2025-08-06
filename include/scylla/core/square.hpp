@@ -1,3 +1,4 @@
+// include/scylla/core/square.hpp
 #pragma once
 
 #include <array>

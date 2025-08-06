@@ -1,3 +1,4 @@
+// tests/bitboard_tests.cpp
 #include <catch2/catch_all.hpp>
 #include <libassert/assert-catch2.hpp>
 

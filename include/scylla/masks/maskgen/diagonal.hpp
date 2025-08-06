@@ -1,3 +1,4 @@
+// include/scylla/masks/maskgen/diagonal.hpp
 #pragma once
 
 #include <cstdint>

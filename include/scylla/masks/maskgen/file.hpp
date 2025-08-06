@@ -1,3 +1,4 @@
+// include/scylla/masks/maskgen/file.hpp
 #pragma once
 
 #include <cstdint>
