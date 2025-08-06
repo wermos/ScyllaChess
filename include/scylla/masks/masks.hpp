@@ -4,16 +4,18 @@
 #include <array>
 
 #include "scylla/bitboard.hpp"
-#include "scylla/maskgen/file.hpp"
-#include "scylla/maskgen/rank.hpp"
-#include "scylla/maskgen/diagonal.hpp"
-#include "scylla/maskgen/antidiagonal.hpp"
+#include "scylla/masks/maskgen/file.hpp"
+#include "scylla/masks/maskgen/rank.hpp"
+#include "scylla/masks/maskgen/diagonal.hpp"
+#include "scylla/masks/maskgen/antidiagonal.hpp"
 
 namespace scy {
+    
 inline constexpr std::array<Bitboard, 8> rankMasks = maskgen::rankMasks();
 inline constexpr std::array<Bitboard, 8> fileMasks = maskgen::fileMasks();
-inline constexpr std::array<Bitboard, 8>  diagonalMasks = maskgen::diagonalMasks();
-inline constexpr std::array<Bitboard, 8>  antiDiagonalMasks = maskgen::antiDiagonalMasks();
+
+inline constexpr std::array<Bitboard, 15>  diagonalMasks = maskgen::diagonalMasks();
+inline constexpr std::array<Bitboard, 15>  antiDiagonalMasks = maskgen::antiDiagonalMasks();
 
 // inline constexpr std::array<Bitboard, 8> rookMasks =
 // generateRookAttackMasks();
