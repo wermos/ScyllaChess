@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include "scylla/bitboard.hpp"
 
 namespace scy {
@@ -12,7 +13,17 @@ enum class Piece : std::uint8_t {
     Rook,
     Queen,
     King,
+    None, // meaning an empty square
 };
+
+enum class Color : std::uint8_t {
+    White,
+    Black,
+};
+
+// Helper: Piece enumeration for [color][piece_type] to improve packing and indexing
+inline constexpr std::size_t NUM_COLORS = 2;
+inline constexpr std::size_t NUM_TYPES = 6;
 
 class ChessBoard {
 
@@ -22,16 +33,10 @@ class ChessBoard {
     }
 
    private:
-    // white pieces
-    std::array<Bitboard, 6> m_whitePieces;
+    std::array<std::array<Bitboard, NUM_TYPES>, NUM_COLORS> m_pieceOcc;
+    std::array<Bitboard, NUM_COLORS> m_colorOcc;
 
-    // black pieces
-    std::array<Bitboard, 6> m_blackPieces;
-
-    // all pieces
-    Bitboard m_allWhitePieces;
-    Bitboard m_allBlackPieces;
-    Bitboard m_allPieces;
+    Bitboard m_occupancy;
 };
 
 }  // namespace scy
