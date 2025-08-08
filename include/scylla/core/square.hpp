@@ -2,8 +2,9 @@
 #pragma once
 
 #include <array>
-#include <cstddef>
+#include <cstdint>
 #include <libassert/assert.hpp>
+#include <optional>
 #include <string>
 #include <string_view>
 #include <type_traits>
@@ -46,10 +47,15 @@ class Square {
     }
 
     // Arithmetic
-    /// TODO: is this function really needed?
-    // constexpr Square offset(std::uint8_t file, std::uint8_t rank) const {
-    //     return Square(static_cast<std::size_t>(m_index + 8 * rank + file));
-    // }
+    constexpr std::optional<Square> offset(std::int64_t df,
+                                           std::int64_t dr) const noexcept {
+        auto maybe_file = file().offset(df);
+        auto maybe_rank = rank().offset(dr);
+        if (maybe_file && maybe_rank) {
+            return Square(*maybe_file, *maybe_rank);
+        }
+        return std::nullopt;
+    }
 
     // Comparison
     auto operator<=>(const Square&) const = default;

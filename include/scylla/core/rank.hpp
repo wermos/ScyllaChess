@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <libassert/assert.hpp>
+#include <optional>
 #include <string_view>
 #include <type_traits>
 
@@ -39,25 +40,48 @@ class Rank {
 
     // "Iterators"
     constexpr Rank& operator++() {
-        m_rank = (m_rank + 1) % 8;
+        m_rank++;
+        ASSERT(m_rank >= 0 && m_rank <= 7,
+               "Rank is invalid after increment:", m_rank,
+               "Expected a value between: 0-7");
         return *this;
     }
 
     constexpr Rank operator++(int) {
         Rank temp = *this;
         ++(*this);
+        ASSERT(m_rank >= 0 && m_rank <= 7,
+               "Rank is invalid after increment:", m_rank,
+               "Expected a value between: 0-7");
         return temp;
     }
 
     constexpr Rank& operator--() {
-        m_rank = (m_rank - 1) % 8;
+        m_rank--;
+        ASSERT(m_rank >= 0 && m_rank <= 7,
+               "Rank is invalid after decrement:", m_rank,
+               "Expected a value between: 0-7");
         return *this;
     }
 
     constexpr Rank operator--(int) {
         Rank temp = *this;
         --(*this);
+        ASSERT(m_rank >= 0 && m_rank <= 7,
+               "Rank is invalid after decrement:", m_rank,
+               "Expected a value between: 0-7");
         return temp;
+    }
+
+    constexpr std::optional<Rank> offset(std::int64_t delta) const noexcept {
+        std::int64_t new_rank_idx = static_cast<std::int64_t>(m_rank) + delta;
+        // m_rank is 0..7 internally, so valid range is 0..7
+        if (new_rank_idx < 0 || new_rank_idx > 7) {
+            return std::nullopt;
+        }
+
+        // Converts back to 1..8 for user-facing Rank constructor
+        return Rank(static_cast<std::uint8_t>(new_rank_idx + 1));
     }
 
     // Comparison

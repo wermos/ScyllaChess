@@ -1,7 +1,9 @@
 // include/scylla/core/file.hpp
 #pragma once
 
+#include <cstdint>
 #include <libassert/assert.hpp>
+#include <optional>
 #include <string_view>
 #include <type_traits>
 
@@ -38,25 +40,47 @@ class File {
 
     // "Iterators"
     constexpr File& operator++() {
-        m_file = (m_file + 1) % 8;
+        m_file++;
+        ASSERT(m_file >= 0 && m_file <= 7,
+               "File is invalid after increment:", m_file,
+               "Expected a value between: 0-7");
         return *this;
     }
 
     constexpr File operator++(int) {
         File temp = *this;
         ++(*this);
+        ASSERT(m_file >= 0 && m_file <= 7,
+               "File is invalid after increment:", m_file,
+               "Expected a value between: 0-7");
         return temp;
     }
 
     constexpr File& operator--() {
-        m_file = (m_file - 1) % 8;
+        m_file--;
+        ASSERT(m_file >= 0 && m_file <= 7,
+               "File is invalid after decrement:", m_file,
+               "Expected a value between: 0-7");
         return *this;
     }
 
     constexpr File operator--(int) {
         File temp = *this;
         --(*this);
+        ASSERT(m_file >= 0 && m_file <= 7,
+               "File is invalid after decrement:", m_file,
+               "Expected a value between: 0-7");
         return temp;
+    }
+
+    constexpr std::optional<File> offset(std::int64_t delta) const noexcept {
+        std::int64_t new_file_idx = static_cast<std::int64_t>(m_file) + delta;
+        // m_file is 0..7 internally, so valid range is 0..7
+        if (new_file_idx < 0 || new_file_idx > 7) {
+            return std::nullopt;
+        }
+        // Converts back to char for File constructor: 'a' is 0
+        return File(static_cast<char>('a' + new_file_idx));
     }
 
     // Comparison
