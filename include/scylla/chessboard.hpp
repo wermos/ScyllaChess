@@ -2,6 +2,7 @@
 #pragma once
 
 #include <cstdint>
+
 #include "scylla/bitboard.hpp"
 
 namespace scy {
@@ -14,7 +15,7 @@ enum class Piece : std::uint8_t {
     Rook,
     Queen,
     King,
-    None, // meaning an empty square
+    None,  // meaning an empty square
 };
 
 enum class Color : std::uint8_t {
@@ -22,7 +23,8 @@ enum class Color : std::uint8_t {
     Black,
 };
 
-// Helper: Piece enumeration for [color][piece_type] to improve packing and indexing
+// Helper: Piece enumeration for [color][piece_type] to improve packing and
+// indexing
 inline constexpr std::size_t NUM_COLORS = 2;
 inline constexpr std::size_t NUM_TYPES = 6;
 
