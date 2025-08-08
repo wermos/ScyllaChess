@@ -30,15 +30,9 @@ class Rank {
     static constexpr Rank Eighth()  noexcept { return Rank(8); }
     // clang-format on
 
-    /// having both std::uint8_t and std::size_t overloads causes ambiguity in
-    /// the Bitboard constructor
-    // constexpr operator std::uint8_t() const noexcept {
-    //     return m_rank;
-    // }
-
-    // `std::size_t` is the "more proper" overload to have because this will
-    // allow for indexing into the mask arrays, which is one of the intended
-    // usecases.
+    // `std::size_t` is the "more proper" overload to have (as opposed to a
+    // `std::uint8_t` overload because this will allow for indexing into the
+    // mask arrays, which is one of the intended usecases.
     constexpr operator std::size_t() const noexcept {
         return m_rank;
     }
@@ -70,49 +64,6 @@ class Rank {
     auto operator<=>(const Rank&) const = default;
 
    private:
-    // static constexpr std::uint8_t validate_uint8(std::uint8_t r) {
-    //     if (std::is_constant_evaluated()) {
-    //         // Compile-time validation with static_assert
-    //         static_assert(r >= 1 && r <= 8,
-    //                      "Rank must be in range 1-8");
-    //         return r - 1;
-    //     } else {
-    //         // Runtime validation with libassert
-    //         ASSERT(r >= 1 && r <= 8,
-    //                "Invalid rank number:", r, "Expected: 1-8");
-    //         return r - 1;
-    //     }
-    // }
-
-    // static constexpr std::uint8_t validate(std::string_view sv) {
-    //     if (std::is_constant_evaluated()) {
-    //         // Compile-time validation
-    //         static_assert(sv.size() == 1,
-    //                      "Rank notation must contain exactly one character");
-    //         return validate_char(sv[0]);
-    //     } else {
-    //         // Runtime validation with libassert rich diagnostics
-    //         ASSERT(sv.size() == 1,
-    //                "Rank notation length error. Expected: 1 character, got:",
-    //                sv.size(), "characters in string:", sv);
-    //         return validate_char(sv[0]);
-    //     }
-    // }
-
-    // static constexpr std::uint8_t validate_char(char c) {
-    //     if (std::is_constant_evaluated()) {
-    //         // Compile-time validation with static_assert
-    //         static_assert(c >= '1' && c <= '8',
-    //                      "Rank character must be in range '1'-'8'");
-    //         return c - '1';
-    //     } else {
-    //         // Runtime validation with libassert
-    //         ASSERT(c >= '1' && c <= '8',
-    //                "Invalid rank character:", c, "Expected: '1'-'8'");
-    //         return c - '1';
-    //     }
-    // }
-
     static constexpr std::uint8_t validate_uint8(std::uint8_t r) {
         // Runtime validation with libassert
         ASSERT(r >= 1 && r <= 8, "Invalid rank number:", r, "Expected: 1-8");

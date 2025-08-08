@@ -55,59 +55,6 @@ class Square {
     auto operator<=>(const Square&) const = default;
 
    private:
-    // static constexpr std::size_t validate_index(std::size_t idx) {
-    //     if (std::is_constant_evaluated()) {
-    //         // Compile-time validation with static_assert
-    //         static_assert(idx < 64, "Square index must be in range 0-63");
-    //         return idx;
-    //     } else {
-    //         // Runtime validation with libassert
-    //         ASSERT(idx < 64,
-    //                "Invalid square index:", idx, "Expected: 0-63");
-    //         return idx;
-    //     }
-    // }
-
-    // static constexpr std::size_t validate(std::string_view notation) {
-    //     if (std::is_constant_evaluated()) {
-    //         // Compile-time validation
-    //         static_assert(notation.size() == 2,
-    //                      "Square notation must contain exactly two
-    //                      characters");
-    //         return validate_notation_chars(notation[0], notation[1]);
-    //     } else {
-    //         // Runtime validation with libassert rich diagnostics
-    //         ASSERT(notation.size() == 2,
-    //                "Square notation length error. Expected: 2 characters,
-    //                got:", notation.size(), "characters in string:",
-    //                notation);
-    //         return validate_notation_chars(notation[0], notation[1]);
-    //     }
-    // }
-
-    // static constexpr std::size_t validate_notation_chars(char file_char, char
-    // rank_char) {
-    //     if (std::is_constant_evaluated()) {
-    //         // Compile-time validation with static_assert
-    //         char file = util::tolower(file_char);
-    //         static_assert(file >= 'a' && file <= 'h',
-    //                      "File character must be in range 'a'-'h'");
-    //         static_assert(rank_char >= '1' && rank_char <= '8',
-    //                      "Rank character must be in range '1'-'8'");
-    //         return (rank_char - '1') * 8 + (file - 'a');
-    //     } else {
-    //         // Runtime validation with libassert
-    //         char file = util::tolower(file_char);
-    //         ASSERT(file >= 'a' && file <= 'h',
-    //                "Invalid file character:", file_char,
-    //                "Lowercased:", file, "Expected: 'a'-'h'");
-    //         ASSERT(rank_char >= '1' && rank_char <= '8',
-    //                "Invalid rank character:", rank_char, "Expected:
-    //                '1'-'8'");
-    //         return (rank_char - '1') * 8 + (file - 'a');
-    //     }
-    // }
-
     static constexpr std::size_t validate_index(std::size_t idx) {
         // Runtime validation with libassert
         ASSERT(idx < 64, "Invalid square index:", idx, "Expected: 0-63");
