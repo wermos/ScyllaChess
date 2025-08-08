@@ -18,7 +18,8 @@ namespace scy::maskgen {
     for (File file = File{'a'}; file <= File{'h'}; ++file) {
         for (Rank rank{1}; rank <= Rank{8}; ++rank) {
             // Map (-7..+7) to (0..14)
-            std::size_t diag_id = static_cast<std::size_t>(file) - static_cast<std::size_t>(rank) + 7;
+            std::size_t diag_id = 7 + static_cast<std::size_t>(file) - static_cast<std::size_t>(rank);
+            // Do the addition before the subtraction to ensure we never go negative
             
             masks[diag_id].set(Square{file, rank});
         }
