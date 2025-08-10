@@ -3,9 +3,9 @@
 
 #include <cstdint>
 
-#include "scylla/core/types.hpp"
 #include "scylla/bitboard.hpp"
 #include "scylla/constants.hpp"
+#include "scylla/core/types.hpp"
 
 namespace scy {
 

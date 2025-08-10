@@ -7,7 +7,7 @@
 #include "scylla/core/square.hpp"
 
 namespace scy {
-    
+
 enum class MoveType : std::uint8_t {
     Normal,
     Capture,
@@ -71,4 +71,4 @@ struct Move {
     }
 };
 
-}
+}  // namespace scy

@@ -4,9 +4,9 @@
 #include <cstdint>
 #include <optional>
 
+#include "scylla/castling_info.hpp"
 #include "scylla/core/square.hpp"
 #include "scylla/core/types.hpp"
-#include "scylla/castling_info.hpp"
 
 namespace scy {
 
@@ -86,5 +86,4 @@ struct GameState {
             side_to_move = Color::White;
         }
     };
-
 }

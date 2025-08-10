@@ -107,4 +107,4 @@ class CastlingInfo {
     std::uint8_t m_rights;
 };
 
-}
+}  // namespace scy

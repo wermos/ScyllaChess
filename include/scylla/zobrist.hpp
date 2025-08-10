@@ -1,11 +1,10 @@
 // include/scylla/zobrist.hpp
 #pragma once
 
+#include <Xoshiro-cpp/XoshiroCpp.hpp>
 #include <array>
 #include <cstddef>
 #include <cstdint>
-
-#include <Xoshiro-cpp/XoshiroCpp.hpp>
 
 #include "scylla/constants.hpp"
 
@@ -22,7 +21,9 @@ struct RNG {
     XoshiroCpp::Xoshiro256StarStar rng;
 
     constexpr explicit RNG(std::uint64_t seed) : rng(seed) {}
-    constexpr Key next() { return rng(); }
+    constexpr Key next() {
+        return rng();
+    }
 };
 
 struct ZobristTables {
@@ -55,8 +56,8 @@ inline constexpr auto tables = generate_impl::generate();
 
 // Public aliases for clarity
 inline constexpr auto& piece_square_keys = tables.piece_square_keys;
-inline constexpr auto& castling_keys     = tables.castling_keys;
-inline constexpr auto& en_passant_keys   = tables.en_passant_keys;
-inline constexpr auto  side_to_move_key  = tables.side_to_move_key;
+inline constexpr auto& castling_keys = tables.castling_keys;
+inline constexpr auto& en_passant_keys = tables.en_passant_keys;
+inline constexpr auto side_to_move_key = tables.side_to_move_key;
 
-} // namespace scy::zobrist
+}  // namespace scy::zobrist

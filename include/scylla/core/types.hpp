@@ -20,4 +20,4 @@ enum class Color : std::uint8_t {
     Black,
 };
 
-}
+}  // namespace scy

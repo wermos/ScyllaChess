@@ -14,11 +14,9 @@ file(GLOB_RECURSE LIB_SOURCES CONFIGURE_DEPENDS src/*.cpp)
 list(REMOVE_ITEM LIB_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
 add_library(scylla_engine ${LIB_SOURCES})
-target_include_directories(scylla_engine PUBLIC
-    include
-    libs/Xoshiro-cpp # The RNG we are using
+target_include_directories(
+    scylla_engine PUBLIC include libs/Xoshiro-cpp # The RNG we are using
 )
-
 
 # Configure libassert options
 set(LIBASSERT_USE_EXTERNAL_CPPTRACE
