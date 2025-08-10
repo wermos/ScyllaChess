@@ -4,3 +4,6 @@
 [submodule "libassert"]
 	path = libs/libassert
 	url = https://github.com/jeremy-rifkin/libassert.git
+[submodule "libs/Xoshiro-cpp"]
+	path = libs/Xoshiro-cpp
+	url = https://github.com/Reputeless/Xoshiro-cpp.git
