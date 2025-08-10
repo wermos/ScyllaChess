@@ -1,6 +1,6 @@
 #pragma once
 
-#include <cstdint>
+#include <cstddef>
 
 #include "scylla/core/file.hpp"
 #include "scylla/core/rank.hpp"

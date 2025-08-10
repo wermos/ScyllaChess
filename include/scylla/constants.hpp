@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstddef>
+#include <cstdint>
 
 /// TODO: Should this be in the `scy::consts` namespace or just naked `scy`?
 namespace scy::consts {

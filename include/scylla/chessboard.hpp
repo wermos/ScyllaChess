@@ -3,28 +3,13 @@
 
 #include <cstdint>
 
+#include "scylla/core/types.hpp"
 #include "scylla/bitboard.hpp"
 #include "scylla/constants.hpp"
 
 namespace scy {
 
 using namespace scy::consts;
-
-// This class should be used to index into the ChessBoard's Bitboard arrays
-enum class Piece : std::uint8_t {
-    Pawn,
-    Knight,
-    Bishop,
-    Rook,
-    Queen,
-    King,
-    None,  // meaning an empty square
-};
-
-enum class Color : std::uint8_t {
-    White,
-    Black,
-};
 
 class ChessBoard {
 
