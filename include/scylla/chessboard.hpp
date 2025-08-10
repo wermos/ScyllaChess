@@ -4,8 +4,11 @@
 #include <cstdint>
 
 #include "scylla/bitboard.hpp"
+#include "scylla/constants.hpp"
 
 namespace scy {
+
+using namespace scy::consts;
 
 // This class should be used to index into the ChessBoard's Bitboard arrays
 enum class Piece : std::uint8_t {
@@ -23,11 +26,6 @@ enum class Color : std::uint8_t {
     Black,
 };
 
-// Helper: Piece enumeration for [color][piece_type] to improve packing and
-// indexing
-inline constexpr std::size_t NUM_COLORS = 2;
-inline constexpr std::size_t NUM_TYPES = 6;
-
 class ChessBoard {
 
     constexpr ChessBoard() {
@@ -36,7 +34,7 @@ class ChessBoard {
     }
 
    private:
-    std::array<std::array<Bitboard, NUM_TYPES>, NUM_COLORS> m_pieceOcc;
+    std::array<std::array<Bitboard, NUM_PIECE_TYPES>, NUM_COLORS> m_pieceOcc;
     std::array<Bitboard, NUM_COLORS> m_colorOcc;
 
     Bitboard m_occupancy;
